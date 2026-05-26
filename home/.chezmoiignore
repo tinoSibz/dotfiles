@@ -1,2 +1,5 @@
 README.md
 **/README.md
+.config/fish/fish_variables
+.config/nvim/lazy-lock.json
+.config/vim/.netrwhist
