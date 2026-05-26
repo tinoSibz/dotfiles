@@ -18,8 +18,7 @@ alias tree='lsd --tree'
 # https://github.com/sharkdp/bat                                     #
 # brew install bat                                                    #
 #--------------------------------------------------------------------#
-alias cat='bat'
-alias catp='bat --plain'  # no decorations, useful for piping
+alias batp='bat --plain'  # no decorations, useful for piping
 
 #--------------------------------------------------------------------#
 # ripgrep — faster grep, respects .gitignore                         #
