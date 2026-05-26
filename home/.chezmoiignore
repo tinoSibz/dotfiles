@@ -3,3 +3,6 @@ README.md
 .config/fish/fish_variables
 .config/nvim/lazy-lock.json
 .config/vim/.netrwhist
+.config/zed/prompts
+.config/zed/themes/
+.config/fish/completions/
