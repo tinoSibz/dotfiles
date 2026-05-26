@@ -2,37 +2,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 #--------------------------------------------------------------------#
-# Prompt-wide Settings                                               #
-#--------------------------------------------------------------------#
-add_newline   = true   # blank line between prompts
-scan_timeout  = 30     # ms to scan files for module detection
-command_timeout = 500  # ms timeout for commands starship runs
-
-#--------------------------------------------------------------------#
-# Nord Colour Palette                                                #
-# https://www.nordtheme.com/docs/colors-and-palettes                 #
-#--------------------------------------------------------------------#
-palette = 'nord'
-
-[palettes.nord]
-nord0  = '#2E3440'  # bg
-nord1  = '#3B4252'  # bg_subtle
-nord2  = '#434C5E'  # bg_highlight
-nord3  = '#4C566A'  # muted
-nord4  = '#D8DEE9'  # fg
-nord5  = '#E5E9F0'  # fg_bright
-nord6  = '#ECEFF4'  # fg_brightest
-nord7  = '#8FBCBB'  # teal
-nord8  = '#88C0D0'  # cyan
-nord9  = '#81A1C1'  # blue
-nord10 = '#5E81AC'  # blue_dark
-nord11 = '#BF616A'  # red
-nord12 = '#D08770'  # orange
-nord13 = '#EBCB8B'  # yellow
-nord14 = '#A3BE8C'  # green
-nord15 = '#B48EAD'  # purple
-
-#--------------------------------------------------------------------#
 # Prompt Layout                                                      #
 #                                                                    #
 # Line 1: context — os, dir, git, languages, tools, duration        #
@@ -117,6 +86,38 @@ $cmd_duration\
 $line_break\
 ${custom.git_identity}
 $character"""
+
+#--------------------------------------------------------------------#
+# Prompt-wide Settings                                               #
+#--------------------------------------------------------------------#
+add_newline   = true   # blank line between prompts
+scan_timeout  = 30     # ms to scan files for module detection
+command_timeout = 500  # ms timeout for commands starship runs
+
+#--------------------------------------------------------------------#
+# Nord Colour Palette                                                #
+# https://www.nordtheme.com/docs/colors-and-palettes                 #
+#--------------------------------------------------------------------#
+palette = 'nord'
+
+[palettes.nord]
+nord0  = '#2E3440'  # bg
+nord1  = '#3B4252'  # bg_subtle
+nord2  = '#434C5E'  # bg_highlight
+nord3  = '#4C566A'  # muted
+nord4  = '#D8DEE9'  # fg
+nord5  = '#E5E9F0'  # fg_bright
+nord6  = '#ECEFF4'  # fg_brightest
+nord7  = '#8FBCBB'  # teal
+nord8  = '#88C0D0'  # cyan
+nord9  = '#81A1C1'  # blue
+nord10 = '#5E81AC'  # blue_dark
+nord11 = '#BF616A'  # red
+nord12 = '#D08770'  # orange
+nord13 = '#EBCB8B'  # yellow
+nord14 = '#A3BE8C'  # green
+nord15 = '#B48EAD'  # purple
+
 
 #--------------------------------------------------------------------#
 # OS                                                                 #
