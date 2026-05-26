@@ -112,13 +112,6 @@ ${custom.git_identity}\
 $line_break\
 $character"""
 
-#--------------------------------------------------------------------#
-# Transient Prompt                                                   #
-# Replaces previous prompts with minimal version after execution     #
-# Keeps terminal history clean with a 3-line prompt                  #
-#--------------------------------------------------------------------#
-[transient_prompt]
-format = '[❯](bold nord14) '
 
 #--------------------------------------------------------------------#
 # Prompt-wide Settings                                               #
