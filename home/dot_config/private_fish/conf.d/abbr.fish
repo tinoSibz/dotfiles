@@ -30,3 +30,15 @@ abbr --add rgf  'rg --files'
 abbr --add ..   'cd ..'
 abbr --add ...  'cd ../..'
 abbr --add .... 'cd ../../..'
+
+#--------------------------------------------------------------------#
+# chezmoi                                                            #
+# https://www.chezmoi.io                                             #
+#--------------------------------------------------------------------#
+abbr --add cz   'chezmoi'
+abbr --add cza  'chezmoi apply'
+abbr --add czd  'chezmoi diff'
+abbr --add czs  'chezmoi status'
+abbr --add czra 'chezmoi re-add'
+abbr --add czcd 'chezmoi-cd'
+abbr --add czi  'chezmoi init --force'
