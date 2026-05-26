@@ -1,0 +1,62 @@
+[user]
+    useconfigonly = true
+    signingkey = 13AC8D52EBAD9582
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+[gpg]
+	program = gpg
+[core]
+	editor = nvim
+	excludesFile = ~/.config/git/ignore
+	autocrlf = input
+	whitespace = trailing-space,space-before-tab
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[push]
+	autoSetupRemote = true
+	default = simple
+[fetch]
+	prune = true
+	pruneTags = true
+[merge]
+	conflictStyle = zdiff3
+	log = true
+	tool = nvimdiff2
+[diff]
+	tool = nvimdiff
+	colorMoved = default
+	algorithm = histogram
+	mnemonicPrefix = true
+	indentHeuristic = true
+	wsErrorHighlight = all
+[mergetool]
+	prompt = false
+	keepBackup = false
+[difftool]
+	prompt = false
+[rebase]
+	autoStash = true
+	autoSquash = true
+    updateRefs = true
+
+[includeIf "gitdir:~/Repos/Personal/"]
+    path = ~/.config/git/personal
+
+[includeIf "gitdir:~/Repos/Sandbox/"]
+    path = ~/.config/git/personal
+
+[includeIf "gitdir:~/Repos/Learning/"]
+    path = ~/.config/git/personal
+
+[includeIf "gitdir:~/Repos/Projects/"]
+    path = ~/.config/git/personal
+
+[includeIf "gitdir:~/Repos/Work/"]
+    path = ~/.config/git/work
+
+[includeIf "gitdir:~/Repos/Client/"]
+    path = ~/.config/git/client
