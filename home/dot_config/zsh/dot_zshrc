@@ -1,0 +1,164 @@
+#--------------------------------------------------------------------#
+# History                                                            #
+#--------------------------------------------------------------------#
+[ -d "$XDG_STATE_HOME"/zsh ] || mkdir -p "$XDG_STATE_HOME"/zsh
+HISTFILE="$XDG_STATE_HOME/zsh/history"    # XDG-compliant history location
+HISTSIZE=100000                           # Lines to keep in memory per session
+SAVEHIST=100000                           # Lines to write to HISTFILE (never exceed HISTSIZE)
+
+setopt SHARE_HISTORY        # Real-time sync across all open sessions
+setopt HIST_IGNORE_ALL_DUPS # Remove all older copies of a command in memory
+setopt HIST_SAVE_NO_DUPS    # Don't write duplicates to disk
+setopt HIST_FIND_NO_DUPS    # Skip duplicates when searching backwards
+setopt HIST_IGNORE_SPACE    # Don't save commands prefixed with a space
+setopt HIST_REDUCE_BLANKS   # Strip excess whitespace before saving
+
+#--------------------------------------------------------------------#
+# Completions                                                        #
+#--------------------------------------------------------------------#
+[ -d "$XDG_CACHE_HOME"/zsh ] || mkdir -p "$XDG_CACHE_HOME"/zsh
+fpath+=$(brew --prefix)/share/zsh/site-functions  # Homebrew completions
+autoload -Uz compinit
+zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+compinit -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
+
+# Completion behaviour
+unsetopt MENU_COMPLETE
+setopt MENU_COMPLETE    # show menu on second tab press
+setopt AUTO_LIST        # Show completion list on ambiguous match without extra tab
+setopt COMPLETE_IN_WORD # Complete from cursor position, not just end of word
+setopt ALWAYS_TO_END    # Move cursor to end of word after completion
+setopt PATH_DIRS        # Perform path search on commands containing slashes
+
+#--------------------------------------------------------------------#
+# Navigation                                                         #
+#--------------------------------------------------------------------#
+setopt AUTO_CD      # Type a directory name to cd into it without cd
+setopt CORRECT      # Suggest corrections for mistyped commands
+setopt GLOB_DOTS    # Include dotfiles in glob patterns without explicit .
+
+#--------------------------------------------------------------------#
+# Vi Mode                                                            #
+#--------------------------------------------------------------------#
+bindkey -v
+export KEYTIMEOUT=1  # Faster INSERT → NORMAL mode switching (10ms)
+
+# Cursor shape feedback — beam in INSERT, block in NORMAL
+cursor_mode() {
+  cursor_block='\e[2 q'
+  cursor_beam='\e[6 q'
+
+  function zle-keymap-select {
+    if [[ ${KEYMAP} == vicmd ]] || [[ $1 = 'block' ]]; then
+      echo -ne $cursor_block
+    elif [[ ${KEYMAP} == main ]] || [[ ${KEYMAP} == viins ]] ||
+         [[ ${KEYMAP} = '' ]]   || [[ $1 = 'beam' ]]; then
+      echo -ne $cursor_beam
+    fi
+  }
+
+  zle-line-init() {
+    echo -ne $cursor_beam  # Start every prompt in INSERT mode (beam)
+  }
+
+  zle -N zle-keymap-select
+  zle -N zle-line-init
+}
+cursor_mode
+
+#--------------------------------------------------------------------#
+# Key Bindings                                                       #
+#--------------------------------------------------------------------#
+bindkey '^[[A' history-search-backward  # Up   — prefix history search
+bindkey '^[[B' history-search-forward   # Down — prefix history search
+
+#--------------------------------------------------------------------#
+# Aliases                                                            #
+#--------------------------------------------------------------------#
+source "$ZDOTDIR/aliases.zsh"
+
+#--------------------------------------------------------------------#
+# Prompt                                                             #
+#--------------------------------------------------------------------#
+eval "$(starship init zsh)"
+
+#--------------------------------------------------------------------#
+# Plugins — keep minimal, only what zsh cannot do natively          #
+#--------------------------------------------------------------------#
+
+#--------------------------------------------------------------------#
+# zsh-autosuggestions                                                #
+#--------------------------------------------------------------------#
+# Suggest commands as you type based on history and completions
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGEST_STRATEGY=(history completion) # Try history first, completion as fallback
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#4c566a,bold" # Nord fg_muted
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20            # Don't trigger on large pastes
+
+#--------------------------------------------------------------------#
+# fzf                                                                #
+#--------------------------------------------------------------------#
+# Key bindings and fuzzy completion
+source <(fzf --zsh)
+
+# fzf options file — Nord theme and global layout
+# See ~/.config/fzf/fzf.conf
+export FZF_DEFAULT_OPTS_FILE="$XDG_CONFIG_HOME/fzf/fzf.conf"
+
+# CTRL+R — history search
+export FZF_CTRL_R_OPTS="
+  --border=rounded
+  --prompt '  history  '
+  --header '  CTRL+Y copy · ESC cancel'
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'"
+
+# CTRL+T — file finder
+export FZF_CTRL_T_OPTS="
+  --border=rounded
+  --prompt '  files  '
+  --header '  CTRL+Y copy path · TAB multi-select'
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always --line-range :100 {}'
+  --preview-window 'right:55%:rounded'
+  --bind 'ctrl-y:execute-silent(echo -n {} | pbcopy)+abort'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# Completion trigger and options
+export FZF_COMPLETION_TRIGGER='**'
+export FZF_COMPLETION_OPTS='--border --info=inline'
+export FZF_COMPLETION_PATH_OPTS='--walker file,dir,follow,hidden'
+export FZF_COMPLETION_DIR_OPTS='--walker dir,follow'
+
+# Per-command preview window
+_fzf_comprun() {
+  local command=$1
+  shift
+  case "$command" in
+    cd)           fzf --preview 'lsd --tree {} | head -200' "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"          "$@" ;;
+    ssh)          fzf --preview 'dig {}'                    "$@" ;;
+    *)            fzf --preview 'bat -n --color=always {}'  "$@" ;;
+  esac
+}
+
+#--------------------------------------------------------------------#
+# fd                                                                 #
+#--------------------------------------------------------------------#
+# fd-based path and directory completion (requires: brew install fd)
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
+#--------------------------------------------------------------------#
+# mise                                                               #
+#--------------------------------------------------------------------#
+eval "$(mise activate zsh)"
+
+#--------------------------------------------------------------------#
+# zsh-syntax-highlighting — MUST BE LAST                            #
+#--------------------------------------------------------------------#
+# Colours commands as you type, showing errors in real time
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

@@ -1,0 +1,18 @@
+# ripgrep configuration file
+# Location: $XDG_CONFIG_HOME/ripgrep/ripgreprc
+# Set via: export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
+
+# Smart case — case insensitive unless pattern contains uppercase
+--smart-case
+
+# Search hidden files by default (still respects .gitignore)
+--hidden
+
+# Never search .git directories
+--glob=!.git/*
+
+# Colours
+--colors=line:style:bold
+--colors=match:fg:yellow
+--colors=match:style:bold
+--colors=path:fg:cyan

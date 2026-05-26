@@ -1,0 +1,5 @@
+# Homebrew environment setup
+# Adds /opt/homebrew/bin to your PATH so you can run brew and everything installed by it
+# Sets HOMEBREW_PREFIX, HOMEBREW_CELLAR, HOMEBREW_REPOSITORY
+# Adds Homebrew's man pages and info pages to MANPATH and INFOPATH
+eval "$(/opt/homebrew/bin/brew shellenv)"

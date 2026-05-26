@@ -1,0 +1,5 @@
+
+# Bootstrap ZDOTDIR
+# This is simply a pointer file
+export ZDOTDIR="$HOME/.config/zsh"
+. "$ZDOTDIR"/.zshenv
