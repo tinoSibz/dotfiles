@@ -1,0 +1,694 @@
+# https://starship.rs/config-schema.json
+"$schema" = 'https://starship.rs/config-schema.json'
+
+#--------------------------------------------------------------------#
+# Nord Colour Palette                                                #
+# https://www.nordtheme.com/docs/colors-and-palettes                 #
+#--------------------------------------------------------------------#
+palette = 'nord'
+
+[palettes.nord]
+nord0  = '#2E3440'  # bg
+nord1  = '#3B4252'  # bg_subtle
+nord2  = '#434C5E'  # bg_highlight
+nord3  = '#4C566A'  # muted
+nord4  = '#D8DEE9'  # fg
+nord5  = '#E5E9F0'  # fg_bright
+nord6  = '#ECEFF4'  # fg_brightest
+nord7  = '#8FBCBB'  # teal
+nord8  = '#88C0D0'  # cyan
+nord9  = '#81A1C1'  # blue
+nord10 = '#5E81AC'  # blue_dark
+nord11 = '#BF616A'  # red
+nord12 = '#D08770'  # orange
+nord13 = '#EBCB8B'  # yellow
+nord14 = '#A3BE8C'  # green
+nord15 = '#B48EAD'  # purple
+
+#--------------------------------------------------------------------#
+# Prompt Layout                                                      #
+#                                                                    #
+# Line 1: context — os, dir, git, languages, tools, duration        #
+# Line 2: git identity — only inside git repos                      #
+# Line 3: character — vi mode aware ❯ / ❮                          #
+#--------------------------------------------------------------------#
+format = """
+$os\
+$username\
+$hostname\
+$directory\
+$vcsh\
+$fossil_branch\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$bun\
+$c\
+$cmake\
+$cobol\
+$cpp\
+$crystal\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$golang\
+$gradle\
+$haskell\
+$helm\
+$java\
+$julia\
+$kotlin\
+$lua\
+$maven\
+$mojo\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$raku\
+$rlang\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$guix_shell\
+$nix_shell\
+$conda\
+$pixi\
+$meson\
+$spack\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$direnv\
+$mise\
+$container\
+$jobs\
+$cmd_duration\
+$line_break\
+${custom.git_identity}\
+$line_break\
+$character"""
+
+#--------------------------------------------------------------------#
+# Transient Prompt                                                   #
+# Replaces previous prompts with minimal version after execution     #
+# Keeps terminal history clean with a 3-line prompt                  #
+#--------------------------------------------------------------------#
+[transient_prompt]
+format = '[❯](bold nord14) '
+
+#--------------------------------------------------------------------#
+# Prompt-wide Settings                                               #
+#--------------------------------------------------------------------#
+add_newline   = true   # blank line between prompts
+scan_timeout  = 30     # ms to scan files for module detection
+command_timeout = 500  # ms timeout for commands starship runs
+
+#--------------------------------------------------------------------#
+# OS                                                                 #
+# Shows OS icon — useful across multiple machines                    #
+#--------------------------------------------------------------------#
+[os]
+disabled = false
+format   = '[$symbol]($style) '
+style    = 'bold nord4'
+
+[os.symbols]
+Macos   = ' '
+Linux   = ' '
+Windows = ' '
+Unknown = ' '
+
+#--------------------------------------------------------------------#
+# Username                                                           #
+# Only shown when root, SSH, or show_always = true                   #
+#--------------------------------------------------------------------#
+[username]
+show_always = false
+style_user  = 'bold nord9'
+style_root  = 'bold nord11'
+format      = '[$user]($style) '
+disabled    = false
+
+#--------------------------------------------------------------------#
+# Hostname                                                           #
+# Only shown on SSH sessions                                         #
+#--------------------------------------------------------------------#
+[hostname]
+ssh_only   = true
+ssh_symbol = ' '
+format     = '[$ssh_symbol$hostname]($style) in '
+style      = 'bold nord8'
+disabled   = false
+
+#--------------------------------------------------------------------#
+# Directory                                                          #
+# 3 path components, truncate to git repo root                       #
+# Matches short_path() in WezTerm tabbar.lua                         #
+#--------------------------------------------------------------------#
+[directory]
+truncation_length   = 3
+truncate_to_repo    = true
+truncation_symbol   = '…/'
+home_symbol         = '~ '
+read_only           = ' '
+read_only_style     = 'nord11'
+style               = 'bold nord8'
+format              = '[$path]($style)[$read_only]($read_only_style) '
+
+#--------------------------------------------------------------------#
+# Git Branch                                                         #
+#--------------------------------------------------------------------#
+[git_branch]
+symbol            = ' '
+style             = 'bold nord9'
+format            = 'on [$symbol$branch(:$remote_branch)]($style) '
+truncation_length = 20
+truncation_symbol = '…'
+
+#--------------------------------------------------------------------#
+# Git Commit                                                         #
+# Shows commit hash in detached HEAD state                           #
+#--------------------------------------------------------------------#
+[git_commit]
+commit_hash_length = 7
+style              = 'bold nord3'
+format             = '[\($hash$tag\)]($style) '
+tag_disabled       = false
+tag_symbol         = '  '
+
+#--------------------------------------------------------------------#
+# Git State                                                          #
+# Shows REBASING, MERGING, CHERRY-PICKING etc.                       #
+#--------------------------------------------------------------------#
+[git_state]
+format       = '\([$state( $progress_current/$progress_total)]($style)\) '
+style        = 'bold nord13'
+rebase       = 'REBASING'
+merge        = 'MERGING'
+revert       = 'REVERTING'
+cherry_pick  = 'CHERRY-PICKING'
+bisect       = 'BISECTING'
+
+#--------------------------------------------------------------------#
+# Git Metrics                                                        #
+# Shows added/deleted line counts                                    #
+# Disabled by default — enable if you want line diff in prompt       #
+#--------------------------------------------------------------------#
+[git_metrics]
+added_style   = 'bold nord14'
+deleted_style = 'bold nord11'
+format        = '([+$added]($added_style) )([-$deleted]($deleted_style) )'
+disabled      = true
+
+#--------------------------------------------------------------------#
+# Git Status                                                         #
+# ahead/behind/diverged counts + file status symbols                 #
+#--------------------------------------------------------------------#
+[git_status]
+style     = 'bold nord11'
+format    = '([\[$all_status$ahead_behind\]]($style) )'
+ahead     = '⇡${count}'
+behind    = '⇣${count}'
+diverged  = '⇕⇡${ahead_count}⇣${behind_count}'
+conflicted = '='
+untracked  = '?'
+stashed    = '$'
+modified   = '!'
+staged     = '+'
+renamed    = '»'
+deleted    = '✘'
+
+#--------------------------------------------------------------------#
+# Custom: Git Identity                                               #
+# Line 2 — shows active git user name and email                      #
+# Only shown inside git repos — confirms personal vs work vs client  #
+#--------------------------------------------------------------------#
+[custom.git_identity]
+command     = 'printf " %s   %s" "$(git config user.name)" "$(git config user.email)"'
+when        = 'git rev-parse --is-inside-work-tree 2>/dev/null'
+format      = '[$output]($style)\n'
+style       = 'dimmed nord3'
+description = 'Active git identity — name and email'
+
+#--------------------------------------------------------------------#
+# Character                                                          #
+# Vi mode aware — ❯ INSERT, ❮ NORMAL                                 #
+# Colour indicates last command success/failure                       #
+#--------------------------------------------------------------------#
+[character]
+success_symbol          = '[❯](bold nord14)'  # green — success
+error_symbol            = '[❯](bold nord11)'  # red — failure
+vimcmd_symbol           = '[❮](bold nord13)'  # yellow — NORMAL mode
+vimcmd_replace_one_symbol = '[❮](bold nord15)' # purple — replace_one
+vimcmd_replace_symbol   = '[❮](bold nord15)'  # purple — replace
+vimcmd_visual_symbol    = '[❮](bold nord9)'   # blue — visual
+
+#--------------------------------------------------------------------#
+# Command Duration                                                   #
+# Shows how long the last command took                               #
+# Useful for scripts, builds, Databricks jobs                        #
+#--------------------------------------------------------------------#
+[cmd_duration]
+min_time           = 2_000   # only show if > 2 seconds
+format             = 'took [$duration]($style) '
+style              = 'bold nord13'
+show_notifications = false
+
+#--------------------------------------------------------------------#
+# Jobs                                                               #
+# Shows background job count                                         #
+#--------------------------------------------------------------------#
+[jobs]
+symbol            = '✦'
+style             = 'bold nord9'
+format            = '[$symbol$number]($style) '
+symbol_threshold  = 1
+number_threshold  = 2
+
+#--------------------------------------------------------------------#
+# Package                                                            #
+# Shows package version from package.json, Cargo.toml etc.          #
+# Disabled — adds noise, rarely useful in prompt                     #
+#--------------------------------------------------------------------#
+[package]
+disabled = true
+
+#--------------------------------------------------------------------#
+# Container                                                          #
+# Shows symbol when inside a container                               #
+#--------------------------------------------------------------------#
+[container]
+symbol = '⬢'
+style  = 'bold nord12'
+format = '[$symbol \[$name\]]($style) '
+
+#--------------------------------------------------------------------#
+# AWS                                                                #
+# Shows current AWS profile and region                               #
+# Disabled — enable when doing AWS work                              #
+#--------------------------------------------------------------------#
+[aws]
+symbol         = ' '
+style          = 'bold nord13'
+format         = 'on [$symbol($profile )(\($region\) )]($style)'
+disabled       = true
+
+#--------------------------------------------------------------------#
+# Azure                                                              #
+# Shows current Azure subscription                                   #
+# Disabled by default — enable when doing Azure work                 #
+#--------------------------------------------------------------------#
+[azure]
+symbol   = '󰠅 '
+style    = 'bold nord9'
+format   = 'on [$symbol($subscription)]($style) '
+disabled = true
+
+#--------------------------------------------------------------------#
+# Google Cloud                                                       #
+# Shows current GCP project and region                               #
+# Disabled — enable when doing GCP work                              #
+#--------------------------------------------------------------------#
+[gcloud]
+symbol = ' '
+style  = 'bold nord9'
+format = 'on [$symbol$account(@$domain)(\($region\))]($style) '
+disabled = true
+
+#--------------------------------------------------------------------#
+# Terraform                                                          #
+# Shows current Terraform workspace                                  #
+# Disabled — enable when doing IaC work                              #
+#--------------------------------------------------------------------#
+[terraform]
+symbol   = '💠'
+style    = 'bold nord15'
+format   = 'via [$symbol$workspace]($style) '
+disabled = true
+
+#--------------------------------------------------------------------#
+# Docker Context                                                     #
+# Shows active Docker context when non-default                       #
+#--------------------------------------------------------------------#
+[docker_context]
+symbol     = ' '
+style      = 'bold nord9'
+format     = 'via [$symbol$context]($style) '
+only_with_files = true
+disabled   = false
+
+#--------------------------------------------------------------------#
+# Kubernetes                                                         #
+# Shows current k8s context and namespace                            #
+# Disabled — enable when doing k8s work                              #
+#--------------------------------------------------------------------#
+[kubernetes]
+symbol   = '☸ '
+style    = 'bold nord8'
+format   = 'on [$symbol$context( \($namespace\))]($style) in '
+disabled = true
+
+#--------------------------------------------------------------------#
+# Direnv                                                             #
+# Shows direnv status when .envrc is present                         #
+#--------------------------------------------------------------------#
+[direnv]
+symbol   = 'direnv '
+style    = 'bold nord13'
+format   = '[$symbol$loaded/$allowed]($style) '
+disabled = true
+
+#--------------------------------------------------------------------#
+# Mise                                                               #
+# Shows mise health status                                           #
+# Disabled by default — enable if you want health in prompt          #
+#--------------------------------------------------------------------#
+[mise]
+symbol          = 'mise '
+style           = 'bold nord15'
+format          = 'on [$symbol$health]($style) '
+healthy_symbol  = 'healthy'
+unhealthy_symbol = 'unhealthy'
+disabled        = true
+
+#--------------------------------------------------------------------#
+# Python                                                             #
+# Shows version and virtualenv when in a Python project              #
+#--------------------------------------------------------------------#
+[python]
+symbol         = ' '
+style          = 'bold nord13'
+format         = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+detect_files   = ['.python-version', 'Pipfile', '__init__.py', 'pyproject.toml',
+                  'requirements.txt', 'setup.py', 'tox.ini']
+detect_extensions = ['py', 'ipynb']
+python_binary  = ['python3', 'python']
+disabled       = false
+
+#--------------------------------------------------------------------#
+# Lua                                                                #
+# Shows version when in a Lua project                                #
+# Useful for WezTerm config editing                                   #
+#--------------------------------------------------------------------#
+[lua]
+symbol            = ' '
+style             = 'bold nord9'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['.lua-version']
+detect_extensions = ['lua']
+detect_folders    = ['lua']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Node.js                                                            #
+#--------------------------------------------------------------------#
+[nodejs]
+symbol            = ' '
+style             = 'bold nord14'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['package.json', '.node-version', '.nvmrc']
+detect_extensions = ['js', 'mjs', 'cjs', 'ts', 'mts', 'cts']
+detect_folders    = ['node_modules']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Rust                                                               #
+#--------------------------------------------------------------------#
+[rust]
+symbol            = ' '
+style             = 'bold nord12'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['Cargo.toml']
+detect_extensions = ['rs']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Go                                                                 #
+#--------------------------------------------------------------------#
+[golang]
+symbol            = ' '
+style             = 'bold nord8'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['go.mod', 'go.sum', 'go.work', '.go-version']
+detect_extensions = ['go']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Java                                                               #
+#--------------------------------------------------------------------#
+[java]
+symbol            = ' '
+style             = 'bold nord12'
+format            = 'via [${symbol}(${version} )]($style)'
+detect_files      = ['pom.xml', 'build.gradle.kts', 'build.sbt', '.java-version']
+detect_extensions = ['java', 'class', 'gradle', 'jar']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Kotlin                                                             #
+#--------------------------------------------------------------------#
+[kotlin]
+symbol            = ' '
+style             = 'bold nord15'
+format            = 'via [$symbol($version )]($style)'
+detect_extensions = ['kt', 'kts']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Scala                                                              #
+#--------------------------------------------------------------------#
+[scala]
+symbol            = ' '
+style             = 'bold nord11'
+format            = 'via [${symbol}(${version} )]($style)'
+detect_files      = ['.scalaenv', '.sbtenv', 'build.sbt']
+detect_extensions = ['sbt', 'scala']
+detect_folders    = ['.metals']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Swift                                                              #
+#--------------------------------------------------------------------#
+[swift]
+symbol            = ' '
+style             = 'bold nord12'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['Package.swift']
+detect_extensions = ['swift']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Ruby                                                               #
+#--------------------------------------------------------------------#
+[ruby]
+symbol            = ' '
+style             = 'bold nord11'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['Gemfile', '.ruby-version']
+detect_extensions = ['rb']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# PHP                                                                #
+#--------------------------------------------------------------------#
+[php]
+symbol            = ' '
+style             = 'bold nord15'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['composer.json', '.php-version']
+detect_extensions = ['php']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Dart                                                               #
+#--------------------------------------------------------------------#
+[dart]
+symbol            = ' '
+style             = 'bold nord9'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['pubspec.yaml', 'pubspec.yml', 'pubspec.lock']
+detect_extensions = ['dart']
+detect_folders    = ['.dart_tool']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Elixir                                                             #
+#--------------------------------------------------------------------#
+[elixir]
+symbol     = ' '
+style      = 'bold nord15'
+format     = 'via [$symbol($version \(OTP $otp_version\) )]($style)'
+detect_files = ['mix.exs']
+disabled   = false
+
+#--------------------------------------------------------------------#
+# Haskell                                                            #
+#--------------------------------------------------------------------#
+[haskell]
+symbol            = ' '
+style             = 'bold nord15'
+format            = 'via [$symbol($version )]($style)'
+detect_extensions = ['hs', 'cabal', 'hs-boot']
+detect_files      = ['stack.yaml', 'cabal.project']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Nim                                                                #
+#--------------------------------------------------------------------#
+[nim]
+symbol            = '👑 '
+style             = 'bold nord13'
+format            = 'via [$symbol($version )]($style)'
+detect_files      = ['nim.cfg']
+detect_extensions = ['nim', 'nims', 'nimble']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# Zig                                                                #
+#--------------------------------------------------------------------#
+[zig]
+symbol            = '↯ '
+style             = 'bold nord13'
+format            = 'via [$symbol($version )]($style)'
+detect_extensions = ['zig']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# C                                                                  #
+#--------------------------------------------------------------------#
+[c]
+symbol            = ' '
+style             = 'bold nord9'
+format            = 'via [$symbol($version(-$name) )]($style)'
+detect_extensions = ['c', 'h']
+disabled          = false
+
+#--------------------------------------------------------------------#
+# CMake                                                              #
+#--------------------------------------------------------------------#
+[cmake]
+symbol       = '△ '
+style        = 'bold nord9'
+format       = 'via [$symbol($version )]($style)'
+detect_files = ['CMakeLists.txt', 'CMakeCache.txt']
+disabled     = false
+
+#--------------------------------------------------------------------#
+# Helm                                                               #
+# Shows helm chart version                                           #
+# Disabled — enable when doing k8s/helm work                         #
+#--------------------------------------------------------------------#
+[helm]
+symbol       = '⎈ '
+style        = 'bold nord8'
+format       = 'via [$symbol($version )]($style)'
+detect_files = ['helmfile.yaml', 'Chart.yaml']
+disabled     = true
+
+#--------------------------------------------------------------------#
+# Pulumi                                                             #
+# Disabled — enable when doing IaC work                              #
+#--------------------------------------------------------------------#
+[pulumi]
+symbol   = ' '
+style    = 'bold nord15'
+format   = 'via [$symbol($username@)$stack]($style) '
+disabled = true
+
+#--------------------------------------------------------------------#
+# Nix Shell                                                          #
+#--------------------------------------------------------------------#
+[nix_shell]
+symbol    = '❄️ '
+style     = 'bold nord8'
+format    = 'via [$symbol$state( \($name\))]($style) '
+disabled  = false
+
+#--------------------------------------------------------------------#
+# Conda                                                              #
+#--------------------------------------------------------------------#
+[conda]
+symbol   = '🅒 '
+style    = 'bold nord14'
+format   = 'via [$symbol$environment]($style) '
+disabled = false
+
+#--------------------------------------------------------------------#
+# Buf                                                                #
+#--------------------------------------------------------------------#
+[buf]
+symbol   = '🐃 '
+style    = 'bold nord9'
+format   = 'with [$symbol($version )]($style)'
+disabled = false
+
+#--------------------------------------------------------------------#
+# Memory Usage                                                       #
+# Disabled — too noisy for daily use                                 #
+#--------------------------------------------------------------------#
+[memory_usage]
+symbol   = ' '
+style    = 'bold nord3'
+format   = 'via $symbol [${ram}( | ${swap})]($style) '
+threshold = 75
+disabled = true
+
+#--------------------------------------------------------------------#
+# Battery                                                            #
+# Disabled — WezTerm handles battery display                         #
+#--------------------------------------------------------------------#
+[battery]
+disabled = true
+
+#--------------------------------------------------------------------#
+# Time                                                               #
+# Disabled — adds noise to prompt                                    #
+#--------------------------------------------------------------------#
+[time]
+disabled = true
+
+#--------------------------------------------------------------------#
+# Shell                                                              #
+# Disabled — shell is evident from context                           #
+#--------------------------------------------------------------------#
+[shell]
+disabled = true
+
+#--------------------------------------------------------------------#
+# Status                                                             #
+# Character module handles success/failure via colour                #
+# Disabled — redundant with character colour change                  #
+#--------------------------------------------------------------------#
+[status]
+disabled = true
+
+#--------------------------------------------------------------------#
+# Line Break                                                         #
+# Explicit line breaks are in format string above                    #
+#--------------------------------------------------------------------#
+[line_break]
+disabled = true
