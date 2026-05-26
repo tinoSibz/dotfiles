@@ -1,0 +1,82 @@
+
+#--------------------------------------------------------------------#
+# Environment variables — all sessions                               #
+#--------------------------------------------------------------------#
+
+# XDG Base Directory
+# https://specifications.freedesktop.org/basedir/latest/
+set -gx XDG_DATA_HOME "$HOME/.local/share"
+set -gx XDG_CONFIG_HOME "$HOME/.config"
+set -gx XDG_STATE_HOME "$HOME/.local/state"
+set -gx XDG_CACHE_HOME "$HOME/.cache"
+{{ if eq .chezmoi.os "linux" -}}
+set -gx XDG_DATA_DIRS "/usr/local/share:/usr/share"
+set -gx XDG_CONFIG_DIRS "/etc/xdg"
+{{ end -}}
+
+# Editors
+set -gx EDITOR "nvim"
+set -gx VISUAL "nvim"
+
+# Starship
+set -gx STARSHIP_CONFIG "$HOME/.config/starship/starship.toml"
+
+# ripgrep
+set -gx RIPGREP_CONFIG_PATH "$XDG_CONFIG_HOME/ripgrep/ripgreprc"
+
+# fzf — options file (Nord theme and layout shared with zsh)
+set -gx FZF_DEFAULT_OPTS_FILE "$XDG_CONFIG_HOME/fzf/fzf.conf"
+
+# Homebrew
+eval (/opt/homebrew/bin/brew shellenv)
+
+#--------------------------------------------------------------------#
+# Interactive sessions only                                          #
+#--------------------------------------------------------------------#
+if status is-interactive
+
+    #----------------------------------------------------------------#
+    # Prompt                                                         #
+    #----------------------------------------------------------------#
+    starship init fish | source
+
+    #----------------------------------------------------------------#
+    # fzf                                                            #
+    #----------------------------------------------------------------#
+    # Key bindings — CTRL+R history, CTRL+T file finder, ALT+C cd
+    fzf --fish | source
+
+    # CTRL+R — history search
+    set -gx FZF_CTRL_R_OPTS "
+  --border=rounded
+  --prompt '  history  '
+  --header '  CTRL+Y copy · ESC cancel'
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'"
+
+    # CTRL+T — file finder with bat preview
+    set -gx FZF_CTRL_T_OPTS "
+  --border=rounded
+  --prompt '  files  '
+  --header '  CTRL+Y copy path · TAB multi-select'
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always --line-range :100 {}'
+  --preview-window 'right:55%:rounded'
+  --bind 'ctrl-y:execute-silent(echo -n {} | pbcopy)+abort'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+    # Completion trigger
+    set -gx FZF_COMPLETION_TRIGGER '**'
+
+    #----------------------------------------------------------------#
+    # fd                                                             #
+    #----------------------------------------------------------------#
+    # fd-based file and directory search for fzf
+    set -gx FZF_CTRL_T_COMMAND 'fd --hidden --follow --exclude .git'
+    set -gx FZF_ALT_C_COMMAND 'fd --type d --hidden --follow --exclude .git'
+
+    #----------------------------------------------------------------#
+    # mise — must be last                                            #
+    #----------------------------------------------------------------#
+    mise activate fish | source
+
+end
