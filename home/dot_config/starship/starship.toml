@@ -123,7 +123,7 @@ disabled   = false
 [directory]
 truncation_length   = 3
 truncate_to_repo    = true
-truncation_symbol   = '…/'
+truncation_symbol   = '/.../'
 home_symbol         = '~ '
 read_only           = ' '
 read_only_style     = 'nord11'
