@@ -224,10 +224,10 @@ deleted    = '✘'
 # Only shown inside git repos — confirms personal vs work vs client  #
 #--------------------------------------------------------------------#
 [custom.git_identity]
-command     = 'printf " %s   %s" "$(git config user.name)" "$(git config user.email)"'
+command = 'printf "󰀓 %s (%s)" "$(git config user.name)" "$(git config user.email)"'
 when        = 'git rev-parse --is-inside-work-tree 2>/dev/null'
 format      = "[$output]($style)\n"
-style       = 'nord3'
+style       = 'nord9'
 description = 'Active git identity — name and email'
 
 #--------------------------------------------------------------------#
