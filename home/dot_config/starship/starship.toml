@@ -12,67 +12,37 @@ format = """
 $username\
 $hostname\
 $directory\
-$vcsh\
 $fossil_branch\
 $git_branch\
 $git_commit\
 $git_state\
 $git_metrics\
 $git_status\
-$hg_branch\
 $docker_context\
 $package\
 $bun\
 $c\
 $cmake\
-$cobol\
 $cpp\
-$crystal\
-$daml\
-$dart\
 $deno\
-$dotnet\
-$elixir\
-$elm\
-$erlang\
-$fennel\
 $golang\
-$gradle\
 $haskell\
 $helm\
-$java\
 $julia\
-$kotlin\
 $lua\
-$maven\
-$mojo\
-$nim\
 $nodejs\
-$ocaml\
-$perl\
-$php\
 $pulumi\
-$purescript\
 $python\
-$raku\
 $rlang\
 $ruby\
 $rust\
 $scala\
-$solidity\
 $swift\
 $terraform\
-$typst\
-$vlang\
 $vagrant\
 $zig\
-$buf\
-$guix_shell\
-$nix_shell\
-$conda\
 $pixi\
 $meson\
-$spack\
 $aws\
 $gcloud\
 $openstack\
@@ -135,7 +105,7 @@ disabled    = false
 #--------------------------------------------------------------------#
 [hostname]
 ssh_only   = true
-ssh_symbol = ' '
+ssh_symbol = '󰣀 '
 format     = '[$ssh_symbol$hostname]($style) in '
 style      = 'bold nord8'
 disabled   = false
@@ -159,7 +129,7 @@ format              = '[$path]($style)[$read_only]($read_only_style) '
 # Git Branch                                                         #
 #--------------------------------------------------------------------#
 [git_branch]
-symbol            = ' '
+symbol            = '󰘬 '
 style             = 'bold nord9'
 format            = 'on [$symbol$branch(:$remote_branch)]($style) '
 truncation_length = 20
@@ -174,7 +144,7 @@ commit_hash_length = 7
 style              = 'bold nord3'
 format             = '[\($hash$tag\)]($style) '
 tag_disabled       = false
-tag_symbol         = '  '
+tag_symbol         = ' '
 
 #--------------------------------------------------------------------#
 # Git State                                                          #
@@ -224,7 +194,7 @@ deleted    = '✘'
 # Only shown inside git repos — confirms personal vs work vs client  #
 #--------------------------------------------------------------------#
 [custom.git_identity]
-command = 'printf "󰀓 %s (%s)" "$(git config user.name)" "$(git config user.email)"'
+command = 'printf " %s (%s)" "$(git config user.name)" "$(git config user.email)"'
 when        = 'git rev-parse --is-inside-work-tree 2>/dev/null'
 format      = "[$output]($style)\n"
 style       = 'nord9'
@@ -278,7 +248,7 @@ disabled = true
 # Shows symbol when inside a container                               #
 #--------------------------------------------------------------------#
 [container]
-symbol = '⬢'
+symbol = ' '
 style  = 'bold nord12'
 format = '[$symbol \[$name\]]($style) '
 
@@ -288,7 +258,7 @@ format = '[$symbol \[$name\]]($style) '
 # Disabled — enable when doing AWS work                              #
 #--------------------------------------------------------------------#
 [aws]
-symbol         = ' '
+symbol         = ' '
 style          = 'bold nord13'
 format         = 'on [$symbol($profile )(\($region\) )]($style)'
 disabled       = true
@@ -310,8 +280,8 @@ disabled = true
 # Disabled — enable when doing GCP work                              #
 #--------------------------------------------------------------------#
 [gcloud]
-symbol = ' '
-style  = 'bold nord9'
+symbol = ' '
+style = 'bold nord14'
 format = 'on [$symbol$account(@$domain)(\($region\))]($style) '
 disabled = true
 
@@ -321,7 +291,7 @@ disabled = true
 # Disabled — enable when doing IaC work                              #
 #--------------------------------------------------------------------#
 [terraform]
-symbol   = '💠'
+symbol   = ' '
 style    = 'bold nord15'
 format   = 'via [$symbol$workspace]($style) '
 disabled = true
@@ -331,7 +301,7 @@ disabled = true
 # Shows active Docker context when non-default                       #
 #--------------------------------------------------------------------#
 [docker_context]
-symbol     = ' '
+symbol     = ' '
 style      = 'bold nord9'
 format     = 'via [$symbol$context]($style) '
 only_with_files = true
@@ -376,7 +346,7 @@ disabled        = true
 # Shows version and virtualenv when in a Python project              #
 #--------------------------------------------------------------------#
 [python]
-symbol         = ' '
+symbol         = '󰌠 '
 style          = 'bold nord13'
 format         = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
 detect_files   = ['.python-version', 'Pipfile', '__init__.py', 'pyproject.toml',
@@ -391,7 +361,7 @@ disabled       = false
 # Useful for WezTerm config editing                                   #
 #--------------------------------------------------------------------#
 [lua]
-symbol            = ' '
+symbol            = ' '
 style             = 'bold nord9'
 format            = 'via [$symbol($version )]($style)'
 detect_files      = ['.lua-version']
@@ -403,7 +373,7 @@ disabled          = false
 # Node.js                                                            #
 #--------------------------------------------------------------------#
 [nodejs]
-symbol            = ' '
+symbol            = '󰎙 '
 style             = 'bold nord14'
 format            = 'via [$symbol($version )]($style)'
 detect_files      = ['package.json', '.node-version', '.nvmrc']
@@ -415,7 +385,7 @@ disabled          = false
 # Rust                                                               #
 #--------------------------------------------------------------------#
 [rust]
-symbol            = ' '
+symbol            = ' '
 style             = 'bold nord12'
 format            = 'via [$symbol($version )]($style)'
 detect_files      = ['Cargo.toml']
@@ -426,39 +396,19 @@ disabled          = false
 # Go                                                                 #
 #--------------------------------------------------------------------#
 [golang]
-symbol            = ' '
+symbol            = ' '
 style             = 'bold nord8'
 format            = 'via [$symbol($version )]($style)'
 detect_files      = ['go.mod', 'go.sum', 'go.work', '.go-version']
 detect_extensions = ['go']
 disabled          = false
 
-#--------------------------------------------------------------------#
-# Java                                                               #
-#--------------------------------------------------------------------#
-[java]
-symbol            = ' '
-style             = 'bold nord12'
-format            = 'via [${symbol}(${version} )]($style)'
-detect_files      = ['pom.xml', 'build.gradle.kts', 'build.sbt', '.java-version']
-detect_extensions = ['java', 'class', 'gradle', 'jar']
-disabled          = false
-
-#--------------------------------------------------------------------#
-# Kotlin                                                             #
-#--------------------------------------------------------------------#
-[kotlin]
-symbol            = ' '
-style             = 'bold nord15'
-format            = 'via [$symbol($version )]($style)'
-detect_extensions = ['kt', 'kts']
-disabled          = false
 
 #--------------------------------------------------------------------#
 # Scala                                                              #
 #--------------------------------------------------------------------#
 [scala]
-symbol            = ' '
+symbol            = ' '
 style             = 'bold nord11'
 format            = 'via [${symbol}(${version} )]($style)'
 detect_files      = ['.scalaenv', '.sbtenv', 'build.sbt']
@@ -470,7 +420,7 @@ disabled          = false
 # Swift                                                              #
 #--------------------------------------------------------------------#
 [swift]
-symbol            = ' '
+symbol            = ' '
 style             = 'bold nord12'
 format            = 'via [$symbol($version )]($style)'
 detect_files      = ['Package.swift']
@@ -481,51 +431,19 @@ disabled          = false
 # Ruby                                                               #
 #--------------------------------------------------------------------#
 [ruby]
-symbol            = ' '
+symbol            = ' '
 style             = 'bold nord11'
 format            = 'via [$symbol($version )]($style)'
 detect_files      = ['Gemfile', '.ruby-version']
 detect_extensions = ['rb']
 disabled          = false
 
-#--------------------------------------------------------------------#
-# PHP                                                                #
-#--------------------------------------------------------------------#
-[php]
-symbol            = ' '
-style             = 'bold nord15'
-format            = 'via [$symbol($version )]($style)'
-detect_files      = ['composer.json', '.php-version']
-detect_extensions = ['php']
-disabled          = false
-
-#--------------------------------------------------------------------#
-# Dart                                                               #
-#--------------------------------------------------------------------#
-[dart]
-symbol            = ' '
-style             = 'bold nord9'
-format            = 'via [$symbol($version )]($style)'
-detect_files      = ['pubspec.yaml', 'pubspec.yml', 'pubspec.lock']
-detect_extensions = ['dart']
-detect_folders    = ['.dart_tool']
-disabled          = false
-
-#--------------------------------------------------------------------#
-# Elixir                                                             #
-#--------------------------------------------------------------------#
-[elixir]
-symbol     = ' '
-style      = 'bold nord15'
-format     = 'via [$symbol($version \(OTP $otp_version\) )]($style)'
-detect_files = ['mix.exs']
-disabled   = false
 
 #--------------------------------------------------------------------#
 # Haskell                                                            #
 #--------------------------------------------------------------------#
 [haskell]
-symbol            = ' '
+symbol            = ' '
 style             = 'bold nord15'
 format            = 'via [$symbol($version )]($style)'
 detect_extensions = ['hs', 'cabal', 'hs-boot']
@@ -533,21 +451,10 @@ detect_files      = ['stack.yaml', 'cabal.project']
 disabled          = false
 
 #--------------------------------------------------------------------#
-# Nim                                                                #
-#--------------------------------------------------------------------#
-[nim]
-symbol            = '👑 '
-style             = 'bold nord13'
-format            = 'via [$symbol($version )]($style)'
-detect_files      = ['nim.cfg']
-detect_extensions = ['nim', 'nims', 'nimble']
-disabled          = false
-
-#--------------------------------------------------------------------#
 # Zig                                                                #
 #--------------------------------------------------------------------#
 [zig]
-symbol            = '↯ '
+symbol            = ' '
 style             = 'bold nord13'
 format            = 'via [$symbol($version )]($style)'
 detect_extensions = ['zig']
@@ -557,7 +464,7 @@ disabled          = false
 # C                                                                  #
 #--------------------------------------------------------------------#
 [c]
-symbol            = ' '
+symbol            = ' '
 style             = 'bold nord9'
 format            = 'via [$symbol($version(-$name) )]($style)'
 detect_extensions = ['c', 'h']
@@ -567,7 +474,7 @@ disabled          = false
 # CMake                                                              #
 #--------------------------------------------------------------------#
 [cmake]
-symbol       = '△ '
+symbol       = ' '
 style        = 'bold nord9'
 format       = 'via [$symbol($version )]($style)'
 detect_files = ['CMakeLists.txt', 'CMakeCache.txt']
@@ -579,7 +486,7 @@ disabled     = false
 # Disabled — enable when doing k8s/helm work                         #
 #--------------------------------------------------------------------#
 [helm]
-symbol       = '⎈ '
+symbol       = ' '
 style        = 'bold nord8'
 format       = 'via [$symbol($version )]($style)'
 detect_files = ['helmfile.yaml', 'Chart.yaml']
@@ -590,77 +497,10 @@ disabled     = true
 # Disabled — enable when doing IaC work                              #
 #--------------------------------------------------------------------#
 [pulumi]
-symbol   = ' '
+symbol   = ' '
 style    = 'bold nord15'
 format   = 'via [$symbol($username@)$stack]($style) '
 disabled = true
-
-#--------------------------------------------------------------------#
-# Nix Shell                                                          #
-#--------------------------------------------------------------------#
-[nix_shell]
-symbol    = '❄️ '
-style     = 'bold nord8'
-format    = 'via [$symbol$state( \($name\))]($style) '
-disabled  = false
-
-#--------------------------------------------------------------------#
-# Conda                                                              #
-#--------------------------------------------------------------------#
-[conda]
-symbol   = '🅒 '
-style    = 'bold nord14'
-format   = 'via [$symbol$environment]($style) '
-disabled = false
-
-#--------------------------------------------------------------------#
-# Buf                                                                #
-#--------------------------------------------------------------------#
-[buf]
-symbol   = '🐃 '
-style    = 'bold nord9'
-format   = 'with [$symbol($version )]($style)'
-disabled = false
-
-#--------------------------------------------------------------------#
-# Memory Usage                                                       #
-# Disabled — too noisy for daily use                                 #
-#--------------------------------------------------------------------#
-[memory_usage]
-symbol   = ' '
-style    = 'bold nord3'
-format   = 'via $symbol [${ram}( | ${swap})]($style) '
-threshold = 75
-disabled = true
-
-#--------------------------------------------------------------------#
-# Battery                                                            #
-# Disabled — WezTerm handles battery display                         #
-#--------------------------------------------------------------------#
-[battery]
-disabled = true
-
-#--------------------------------------------------------------------#
-# Time                                                               #
-# Disabled — adds noise to prompt                                    #
-#--------------------------------------------------------------------#
-[time]
-disabled = true
-
-#--------------------------------------------------------------------#
-# Shell                                                              #
-# Disabled — shell is evident from context                           #
-#--------------------------------------------------------------------#
-[shell]
-disabled = true
-
-#--------------------------------------------------------------------#
-# Status                                                             #
-# Character module handles success/failure via colour                #
-# Disabled — redundant with character colour change                  #
-#--------------------------------------------------------------------#
-[status]
-disabled = false
 
 #--------------------------------------------------------------------#
 # Line Break                                                         #
