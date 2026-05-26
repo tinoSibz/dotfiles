@@ -42,3 +42,10 @@ alias ....='cd ../../..'
 alias rm='rm -i'   # confirm before deleting
 alias mv='mv -i'   # confirm before overwriting
 alias cp='cp -i'   # confirm before overwriting
+
+#--------------------------------------------------------------------#
+# chezmoi                                                            #
+#--------------------------------------------------------------------#
+chezmoi-cd() {
+    cd $(chezmoi source-path)
+}
