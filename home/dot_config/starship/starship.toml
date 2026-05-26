@@ -84,7 +84,8 @@ $container\
 $jobs\
 $cmd_duration\
 $line_break\
-${custom.git_identity}
+${custom.git_identity}\
+$line_break\
 $character"""
 
 #--------------------------------------------------------------------#
@@ -242,8 +243,8 @@ deleted    = '✘'
 [custom.git_identity]
 command     = 'printf " %s   %s" "$(git config user.name)" "$(git config user.email)"'
 when        = 'git rev-parse --is-inside-work-tree 2>/dev/null'
-format      = "[$output]($style)\n"
-style       = 'dimmed nord3'
+format      = "[$output]($style)"
+style       = 'nord3'
 description = 'Active git identity — name and email'
 
 #--------------------------------------------------------------------#
@@ -676,11 +677,11 @@ disabled = true
 # Disabled — redundant with character colour change                  #
 #--------------------------------------------------------------------#
 [status]
-disabled = true
+disabled = false
 
 #--------------------------------------------------------------------#
 # Line Break                                                         #
 # Explicit line breaks are in format string above                    #
 #--------------------------------------------------------------------#
 [line_break]
-disabled = true
+disabled = false
