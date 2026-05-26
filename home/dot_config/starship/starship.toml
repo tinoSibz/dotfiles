@@ -7,6 +7,13 @@
 #--------------------------------------------------------------------#
 palette = 'nord'
 
+#--------------------------------------------------------------------#
+# Prompt-wide Settings                                               #
+#--------------------------------------------------------------------#
+add_newline   = true   # blank line between prompts
+scan_timeout  = 30     # ms to scan files for module detection
+command_timeout = 500  # ms timeout for commands starship runs
+
 [palettes.nord]
 nord0  = '#2E3440'  # bg
 nord1  = '#3B4252'  # bg_subtle
@@ -111,14 +118,6 @@ $line_break\
 ${custom.git_identity}\
 $line_break\
 $character"""
-
-
-#--------------------------------------------------------------------#
-# Prompt-wide Settings                                               #
-#--------------------------------------------------------------------#
-add_newline   = true   # blank line between prompts
-scan_timeout  = 30     # ms to scan files for module detection
-command_timeout = 500  # ms timeout for commands starship runs
 
 #--------------------------------------------------------------------#
 # OS                                                                 #
