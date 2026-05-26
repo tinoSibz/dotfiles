@@ -116,7 +116,6 @@ $jobs\
 $cmd_duration\
 $line_break\
 ${custom.git_identity}\
-$line_break\
 $character"""
 
 #--------------------------------------------------------------------#
