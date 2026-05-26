@@ -1,0 +1,81 @@
+" ~/.config/vim/vimrc
+" Minimal vim configuration — no plugins, no plugin manager
+" XDG compliant via $VIMRUNTIME/xdg.vim (requires vim 9.2+)
+
+" Source XDG directory support
+source $VIMRUNTIME/xdg.vim
+
+"--------------------------------------------------------------------"
+" Sensible defaults                                                  "
+"--------------------------------------------------------------------"
+set nocompatible                " Disable vi compatibility
+set encoding=utf-8              " UTF-8 encoding
+set fileencoding=utf-8
+set backspace=indent,eol,start  " Sensible backspace
+set hidden                      " Allow switching buffers without saving
+set updatetime=300              " Faster updates
+set scrolloff=8                 " Keep 8 lines above/below cursor
+set sidescrolloff=8             " Keep 8 columns left/right of cursor
+set wrap                        " Wrap long lines
+set linebreak                   " Wrap at word boundaries
+
+"--------------------------------------------------------------------"
+" UI                                                                 "
+"--------------------------------------------------------------------"
+set number                      " Absolute line number on current line
+set relativenumber              " Relative line numbers
+set cursorline                  " Highlight current line
+set signcolumn=no               " No sign column — no plugins to use it
+set termguicolors               " True colour support
+set wildmenu                    " Enhanced command completion
+set showcmd                     " Show partial commands
+
+"--------------------------------------------------------------------"
+" Status line                                                        "
+"--------------------------------------------------------------------"
+set laststatus=2                " Always show status line
+set statusline=\ %F             " Full file path
+set statusline+=\ %m%r%h%w      " Modified, readonly, help, preview flags
+set statusline+=%=              " Switch to right side
+set statusline+=\ %{&filetype}  " File type
+set statusline+=\ \|\ %l/%L     " Current line / total lines
+set statusline+=\ %p%%\         " Percentage through file
+
+"--------------------------------------------------------------------"
+" Indentation                                                        "
+"--------------------------------------------------------------------"
+set tabstop=4                   " Tab width
+set shiftwidth=4                " Indent width
+set expandtab                   " Spaces instead of tabs
+set autoindent                  " Copy indent from current line
+set smartindent                 " Smart autoindenting
+
+"--------------------------------------------------------------------"
+" Search                                                             "
+"--------------------------------------------------------------------"
+set incsearch                   " Incremental search
+set hlsearch                    " Highlight matches
+set ignorecase                  " Case insensitive search
+set smartcase                   " Case sensitive if pattern has uppercase
+
+"--------------------------------------------------------------------"
+" Colour overrides — Nord palette                                    "
+" Values reference palette.lua Nord colours for consistency          "
+"--------------------------------------------------------------------"
+highlight Statement    guifg=#81A1C1 gui=NONE   " Nord blue
+highlight Keyword      guifg=#81A1C1 gui=NONE   " Nord blue
+highlight Type         guifg=#8FBCBB gui=NONE   " Nord teal
+highlight String       guifg=#A3BE8C gui=NONE   " Nord green
+highlight Comment      guifg=#616E88 gui=italic " Nord fg_dim
+highlight Constant     guifg=#B48EAD gui=NONE   " Nord purple
+highlight Identifier   guifg=#D8DEE9 gui=NONE   " Nord fg
+highlight PreProc      guifg=#88C0D0 gui=NONE   " Nord cyan
+highlight Special      guifg=#EBCB8B gui=NONE   " Nord yellow
+highlight LineNr       guifg=#4C566A gui=NONE   " Nord muted — inactive numbers
+highlight CursorLineNr guifg=#88C0D0 gui=bold   " Nord cyan — current line
+highlight StatusLine   guifg=#D8DEE9 guibg=#3B4252 gui=NONE  " Nord bg_subtle
+highlight StatusLineNC guifg=#4C566A guibg=#2E3440 gui=NONE  " inactive — muted
+
+
+set title
+set titlestring=%{expand('%:~')}\ —\ vim
