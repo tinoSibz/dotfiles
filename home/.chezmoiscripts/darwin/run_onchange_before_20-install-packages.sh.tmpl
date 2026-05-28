@@ -7,7 +7,11 @@ if (( ! $+commands[brew] )); then
     exit 0
 fi
 
-brew bundle --file=/dev/stdin <<EOF
+# Write Brewfile to temp file so we can run both install and cleanup
+BREWFILE=$(mktemp)
+trap "rm -f $BREWFILE" EXIT
+
+cat > "$BREWFILE" <<EOF
 {{ range .packages.brews -}}
 brew {{ . | quote }}
 {{ end -}}
@@ -15,6 +19,19 @@ brew {{ . | quote }}
 cask {{ . | quote }}
 {{ end -}}
 EOF
+
+# Install packages
+brew bundle install --file="$BREWFILE"
+
+# Remove packages not in Brewfile
+brew bundle cleanup --force --file="$BREWFILE"
+
+# Remove unused dependencies
+brew autoremove
+
+# Remove old cached downloads and old versions
+brew cleanup --prune=all
+
 {{- else }}
 exit 0
 {{- end }}
