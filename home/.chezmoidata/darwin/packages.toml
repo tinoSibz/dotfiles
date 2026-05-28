@@ -1,0 +1,57 @@
+# macOS packages managed via Homebrew
+# https://brew.sh
+#
+# Used by: home/.chezmoiscripts/darwin/run_onchange_before_install-packages.sh.tmpl
+# Access in templates via: .packages.brews / .packages.casks
+
+[packages]
+
+brews = [
+  # Clone of cat(1) with syntax highlighting and Git integration
+  "bat",
+  # Manage your dotfiles across multiple diverse machines, securely
+  "chezmoi",
+  # Simple, fast and user-friendly alternative to find
+  "fd",
+  # User-friendly command-line shell for UNIX-like operating systems
+  "fish",
+  # Command-line fuzzy finder written in Go
+  "fzf",
+  # Distributed revision control system
+  "git",
+  # GNU Privacy Guard (OpenPGP)
+  "gnupg",
+  # Clone of ls with colorful output, file type icons, and more
+  "lsd",
+  # Polyglot runtime manager (asdf rust clone)
+  "mise",
+  # Ambitious Vim-fork focused on extensibility and agility
+  "neovim",
+  # Modern shell for the GitHub era
+  "nushell",
+  # Pinentry for GPG on Mac
+  "pinentry-mac",
+  # Search tool like grep and The Silver Searcher
+  "ripgrep",
+  # Cross-shell prompt for astronauts
+  "starship",
+  # Vi workalike with many additional features
+  "vim",
+  # UNIX shell (command interpreter)
+  "zsh",
+  # Fish-like fast/unobtrusive autosuggestions for zsh
+  "zsh-autosuggestions",
+  # Fish shell like syntax highlighting for zsh
+  "zsh-syntax-highlighting",
+]
+
+casks = [
+  # Nerd Fonts
+  "font-fira-code-nerd-font",
+  "font-jetbrains-mono-nerd-font",
+  "font-meslo-lg-nerd-font",
+  # GPU-accelerated cross-platform terminal emulator and multiplexer
+  "wezterm@nightly",
+  # Multiplayer code editor
+  "zed",
+]
