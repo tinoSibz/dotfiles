@@ -47,5 +47,5 @@ alias cp='cp -i'   # confirm before overwriting
 # chezmoi                                                            #
 #--------------------------------------------------------------------#
 chezmoi-cd() {
-    cd $(chezmoi source-path)
+    cd $(dirname $(chezmoi source-path))
 }
