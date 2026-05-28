@@ -5,4 +5,4 @@ set -euo pipefail
 chezmoi decrypt {{ joinPath .chezmoi.sourceDir "encrypted_gpg-private-key.asc.age" | quote }} | gpg --import
 
 # Set ultimate trust
-echo "13AC8D52EBAD9582:6:" | gpg --import-ownertrust
+echo "ABEC66E739D016DAF4C0B87013AC8D52EBAD9582:6:" | gpg --import-ownertrust
