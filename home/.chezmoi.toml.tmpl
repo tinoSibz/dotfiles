@@ -1,5 +1,16 @@
+{{- $age_key := joinPath .chezmoi.homeDir ".config/age/key.txt" -}}
+
 sourceDir = "~/Repos/Personal/dotfiles"
 destDir   = "~/"
+
+
+{{ if stat $age_key -}}
+encryption = "age"
+{{- $age_public_key := regexFind "age1[0-9a-z]+" (include $age_key) }}
+[age]
+    identity  = {{ $age_key | quote }}
+    recipient = {{ $age_public_key | quote }}
+{{- end }}
 
 [cd]
 command = "fish"
