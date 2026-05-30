@@ -7,6 +7,7 @@ README.md
 .config/zed/themes/
 .config/fish/completions/
 .config/chezmoi
+.config/age
 gpg-private-key.asc
 
 .ssh

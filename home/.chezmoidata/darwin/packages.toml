@@ -54,4 +54,6 @@ casks = [
   "wezterm@nightly",
   # Multiplayer code editor
   "zed",
+  # Terminal-based AI coding assistant
+  "claude-code",
 ]

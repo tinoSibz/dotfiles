@@ -27,6 +27,9 @@ set -gx RIPGREP_CONFIG_PATH "$XDG_CONFIG_HOME/ripgrep/ripgreprc"
 # fzf — options file (Nord theme and layout shared with zsh)
 set -gx FZF_DEFAULT_OPTS_FILE "$XDG_CONFIG_HOME/fzf/fzf.conf"
 
+# Claude
+set -gx CLAUDE_CONFIG_DIR "$XDG_CONFIG_HOME/claude"
+
 # Homebrew
 eval (/opt/homebrew/bin/brew shellenv)
 
