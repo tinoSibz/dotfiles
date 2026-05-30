@@ -54,6 +54,8 @@ casks = [
   "wezterm@nightly",
   # Multiplayer code editor
   "zed",
+  # Anthropic's official Claude AI desktop app
+  "claude",
   # Terminal-based AI coding assistant
   "claude-code",
 ]
