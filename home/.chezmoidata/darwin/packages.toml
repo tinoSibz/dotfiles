@@ -58,4 +58,10 @@ casks = [
   "claude",
   # Terminal-based AI coding assistant
   "claude-code",
+  # Online diagram software
+  "drawio",
+  # Knowledge base that works on top of a local folder of plain text Markdown files
+  "obsidian",
+  # Web browser focusing on privacy
+  # "brave-browser",
 ]
