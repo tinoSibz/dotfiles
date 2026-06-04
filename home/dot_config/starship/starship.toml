@@ -60,7 +60,7 @@ $character"""
 #--------------------------------------------------------------------#
 add_newline   = true   # blank line between prompts
 scan_timeout  = 30     # ms to scan files for module detection
-command_timeout = 500  # ms timeout for commands starship runs
+command_timeout = 2000  # ms timeout for commands starship runs
 
 #--------------------------------------------------------------------#
 # Nord Colour Palette                                                #
