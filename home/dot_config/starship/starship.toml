@@ -121,7 +121,7 @@ disabled   = false
 # Matches short_path() in WezTerm tabbar.lua                         #
 #--------------------------------------------------------------------#
 [directory]
-truncation_length   = 3
+truncation_length   = 1
 truncate_to_repo    = true
 truncation_symbol   = '/.../'
 home_symbol         = '~'
