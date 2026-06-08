@@ -60,6 +60,8 @@ casks = [
   "claude-code",
   # Online diagram software
   "drawio",
+  # Native desktop AI assistant from Google
+  "google-gemini",
   # Knowledge base that works on top of a local folder of plain text Markdown files
   "obsidian",
   # Web browser focusing on privacy
