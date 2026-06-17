@@ -3,4 +3,5 @@ activate_aggressive = true
 experimental = true
 
 [tools]
+"aqua:astral-sh/uv" = "latest"
 usage = "latest"

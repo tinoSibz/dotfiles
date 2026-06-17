@@ -66,4 +66,6 @@ casks = [
   "obsidian",
   # Web browser focusing on privacy
   "brave-browser",
+  # Collect, organise, cite, and share research sources
+  "zotero",
 ]
